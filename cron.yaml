@@ -1,0 +1,5 @@
+cron:
+
+- description: get online status
+    url: /stat/task
+    schedule: every 5 minutes

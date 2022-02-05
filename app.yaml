@@ -1,0 +1,49 @@
+application: wiki-ee
+version: 1
+runtime: python27
+api_version: 1
+threadsafe: true
+
+# expiration doesn't work under admin user
+default_expiration: "1d"
+
+handlers:
+- url: /_static/css
+  static_dir: template/static/css
+  mime_type: text/css
+
+- url: /_static/js
+  static_dir: template/static/js
+  mime_type: application/javascript
+
+- url: /_static/img
+  static_dir: template/static/img
+
+- url: /_docs
+  static_dir: template/static/html
+
+- url: /\.user.*
+  script: user.app
+  login: required
+
+- url: /\.search.*
+  script: search.app
+  login: required
+
+- url: /\.task.*
+  script: main.app
+  login: admin
+
+- url: /.*
+  script: main.app
+
+
+
+builtins:
+- appstats: on
+- deferred: on
+
+
+libraries:
+- name: jinja2
+  version: latest

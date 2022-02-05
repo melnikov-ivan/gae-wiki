@@ -1,0 +1,17 @@
+{% extends "index.html" %}
+
+{% block content %}
+
+<a href="/.user">Подтвердить</a>
+
+<h1>Пользователи</h1>
+
+<ul>
+{% for user in users %}
+	<li>
+	<div id="{{ user.key().id() }}">{{ user.email }}</div>
+	</li>
+{% endfor %}
+</ul>
+
+{% endblock %}

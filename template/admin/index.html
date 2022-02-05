@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="icon" type="image/png" href="/_static/img/favicon.png">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>Админка</title>
+	<link rel="stylesheet" type="text/css" href="/_static/css/admin.css">
+	<script src="/_static/js/jquery.js"></script>
+	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+</head>
+
+<body>
+
+<a href="{{ logout }}">Выйти</a>
+
+{% block content %}
+
+<h1>Admin</h1>
+
+
+    <script type="text/javascript">
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(loadCharts());
+
+      function loadCharts() {
+      	getChart("GetPage", "get_chart_div"); 
+      	getChart("EditPage", "edit_chart_div");
+      }
+
+      function getChart(name, block_id) {
+      	$.ajax({
+			type: "GET",
+			url: "/stat/api/" + name,
+			cache: false,
+		}).done(function(msg) {
+			chart_data = eval(msg)
+
+			for(var i=1; i < chart_data.length; i++){
+				d = new Date(chart_data[i][0])
+				chart_data[i][0] = d 
+			}
+	
+	        var data = google.visualization.arrayToDataTable(chart_data)
+	        var options = {
+	          title: name,
+	          // hAxis: {title: 'Age', minValue: 0, maxValue: 15},
+	          // vAxis: {title: 'Weight', minValue: 0, maxValue: 15},
+	          legend: 'none'
+	        };
+
+	        var chart = new google.visualization.LineChart(document.getElementById(block_id));
+	    	chart.draw(data, options);
+
+		});
+      }
+    </script>
+
+	<div id="get_chart_div" style="width: 900px; height: 400px;"></div>
+	<div id="edit_chart_div" style="width: 900px; height: 400px;"></div>
+
+	{# last created apps #}
+	<div>
+		{% for app in apps %} 
+			<div>
+				<a href="http://{{ app.key().name() }}.wikinote.me">{{ app.key().name() }}</a>
+				{{ app.created.strftime('%d.%m.%y %H:%M') }}
+			</div>
+		{% endfor %}
+	</div>
+
+{% endblock %}
+
+</body>
+</html>

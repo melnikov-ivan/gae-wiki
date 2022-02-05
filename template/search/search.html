@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="icon" type="image/png" href="/_static/img/favicon.png">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+	<link rel="stylesheet" type="text/css" href="/_static/css/page.css">
+	<link rel="stylesheet" type="text/css" href="/_static/css/search.css">
+	<title>Поиск</title>
+</head>
+<body>
+
+<div class="page-content">
+
+<div style="padding-bottom: 45px;">
+
+	<form class="search-form">
+		<input name="text" size="50"  value="{{ text }}" placeholder="Поиск"/>
+		<input type="submit" value="Найти"/>
+	</form>
+
+	{# search results #}
+	{% for page in docs %}
+		<div class="search-item">
+			{{ loop.index }}
+			{{ page.name if page.name else '' }}
+			<a href="{{ page.path }}">{{ page.path }}</a>
+		</div>
+	{% endfor %}
+
+</div>
+
+<div class="page-footer">
+	<span>
+		<a href="/_docs/syntax.html">Синтаксис</a>
+	</span>
+	<span>
+		<a href="http://bitbucket.org/imelnikov/gae-wiki/issues/new">Нашли ошибку?</a>
+	</span>
+	<span>
+		<a href="mailto:melnikov.ivan@gmail.com">Вопросы</a>
+	</span>
+	<span>
+		2012-2017 &copy; <a href="http://bitbucket.org/imelnikov/gae-wiki">gae-wiki</a>
+	</span>
+</div>
+
+</div>
+</body>

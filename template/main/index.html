@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{% block title %}WikiNote.me{% endblock %}</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name=viewport content="width=device-width, initial-scale=1">
+	<link rel="icon" type="image/png" href="/_static/img/favicon.png">
+	<link rel="stylesheet" type="text/css" href="/_static/css/main.css">
+	<script type="text/javascript" charset="utf-8" src="/_static/js/main.js"></script>
+	<script src="/_static/js/jquery.js"></script>
+	{% block head %} {% endblock %}
+</head>
+
+<body>
+
+{% block content %}
+<div class="main">
+
+<div class="header">
+
+<div style="float: left;">
+<h1>WikiNote</h1>
+</div>
+
+<div class="header-right">
+	
+	<h2>Создать Вики</h2>
+
+	<div class="create-app">
+		<form method="POST" action="/create">
+			<div id='check-result'></div>
+			<span><input name="name" onkeyup="check($(this).val(), 'check-result')"/>.wikinote.me</span>
+			<input type="submit" value="Создать" class="create-app-btn"
+					onclick="_gaq.push(['_trackEvent', 'create'])"/>
+		</form>
+	<div style="clear:both;"></div>
+	</div>
+
+	<h2>Возможности:</h2>
+
+</div>
+
+</div>
+
+<div class="features">
+
+<ul>
+	<li>
+		<div class="feature">Простой формат</div>
+		<img src="/_static/img/main/format.png"/>
+	</li>
+	<li>
+		<div class="feature">Картинки в тексте страницы</div>
+		<img src="/_static/img/main/image.png"/>
+	</li>
+	<li>
+		<div class="feature">Неограниченный размер файлов</div>
+		<img src="/_static/img/main/large-files.png"/>
+	</li>
+	<li>
+		<div class="feature">Приватные разделы</div>
+		<img src="/_static/img/main/private.png"/>
+	</li>
+	<li>
+		<div class="feature">Добавляйте друзей</div>
+		<img src="/_static/img/main/users.png"/>
+	</li>
+	<li>
+		<div class="feature">Поиск по всем страницам</div>
+		<img src="/_static/img/main/search.png"/>
+	</li>
+</ul>
+
+<div style="clear: both;"/>
+</div>
+
+</div>
+
+<div class="footer">
+	<a href="/faq">Вопросы</a>
+	<a href="mailto:melnikov.ivan@gmail.com">Контакты</a>
+</div>
+
+{% endblock %}
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+(function (d, w, c) {
+    (w[c] = w[c] || []).push(function() {
+        try {
+            w.yaCounter21358711 = new Ya.Metrika({id:21358711,
+            		webvisor:true,
+                    clickmap:true,
+                    trackLinks:true,
+                    accurateTrackBounce:true});
+        } catch(e) { }
+    });
+
+    var n = d.getElementsByTagName("script")[0],
+        s = d.createElement("script"),
+        f = function () { n.parentNode.insertBefore(s, n); };
+    s.type = "text/javascript";
+    s.async = true;
+    s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js";
+
+    if (w.opera == "[object Opera]") {
+        d.addEventListener("DOMContentLoaded", f, false);
+    } else { f(); }
+})(document, window, "yandex_metrika_callbacks");
+</script>
+<noscript><div><img src="//mc.yandex.ru/watch/21358711" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-41232767-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,64 @@
+{% extends "get.html" %}
+
+{% block get_content %}
+
+
+{# edit wiki page #}
+<form method="post">
+	<input type="hidden" name="history"/>
+	<input type="hidden" name="updated" value="{{ page.updated.strftime('%s') if page else 0 }}"/>
+
+	<input id="name" name="name" value="{{ page.name if page.name else name }}"/>
+	<select name="markup" id="markup">
+		<option value="HTML" {% if markup == 'HTML' %}selected{% endif %}>HTML</option>
+		<option value="WIKI" {% if markup == 'WIKI' %}selected{% endif %}>Wiki</option>
+	</select>
+
+
+	<span id="message"></span>
+
+	{# edit mode #}
+	<div id="wiki" style="display: none;">
+	<a href="#" onclick="toggle('.edit-text', '.edit-preview'); resizeTextArea();">Правка</a>
+	<a href="#" onclick="previewPage($('.edit-text').val(), '.edit-preview')">Просмотр</a>
+	<a href="/_docs/syntax.html" target="_blank">Синтаксис</a>
+	</div>
+
+	{# wysiwyg #}
+	<div id="html" style="display: none;">
+	<script src="//tinymce.cachefly.net/4.1/tinymce.min.js"></script>
+	</div>
+
+	<script type="text/javascript">
+		// select current editor
+		editor('{{ markup }}');
+
+		$("#markup").change(function(){
+            editor($("#markup").val());
+		});
+	</script>
+
+	{# page text #}
+	<div>
+		<!-- textarea.edit-text is used for autosave -->
+		<textarea class="edit-text" name="text">{{ text }}</textarea>
+		
+		<div class="edit-preview page-text" style="display: none"/>
+	</div>
+
+	<input type="submit" value="Сохранить"/>
+
+	{% if page %}
+		<a href="{{ page.path }}">Отмена</a>
+	{% else %}
+		<a href="javascript: window.history.back()">Назад</a>
+	{% endif %}
+</form>
+
+<script type="text/javascript">
+$(window).resize(resizeTextArea);
+$(window).ready($(window).trigger('resize'));
+autosave(window.location.href);
+</script>
+
+{% endblock %}

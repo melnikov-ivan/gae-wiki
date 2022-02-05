@@ -1,0 +1,140 @@
+{% extends "index.html" %}
+
+{% block head %} 
+<title>{% if page and page.name %}{{ page.name }}{% endif %}</title>
+{% endblock %}
+
+
+{% block content %}
+
+{% set has_access = page is access %}
+
+{% if page and has_access and not public %}
+{# cant show any menu for dead page #}
+
+{# page settings #}
+<div class="page-menu">
+	<a href="{{ page.upath() }}/.edit" class="page-menu-item">Правка</a>
+	<ul class="page-files page-edit">
+		<!-- <li class="page-files-link">
+			<a href="">Изменить</a>
+		</li> -->
+		<li class="page-files-link">
+			<a href="{{ page.upath() }}/.tree">Подстраницы</a>
+		</li>
+		<li class="page-files-link">
+			<a href="{{ page.upath() }}/.subscribe">Подписка</a>
+		</li>
+		<hr/>
+		<li class="page-files-link">
+			<a href="{{ page.upath() }}/.move">Переместить</a>
+		</li>
+		<li class="page-files-link">
+			<a href="{{ page.upath() }}/.access">Доступ</a>
+		</li>
+		<li class="page-files-link">
+			<a href="{{ page.upath() }}/.delete">Удалить</a>
+		</li>
+	</ul>
+</div>
+
+{# file list #}
+<div class="page-menu">
+	<div class="page-menu-item">
+		{% if page.f_cnt > 0 %}
+		Файлы ({{ page.f_cnt }}) 
+		{% else %}
+		Нет файлов
+		{% endif %}
+
+		{# add file #}
+		<a 	id="add-file" 
+			onclick="$('#file-name').trigger('click'); return false;"
+			title="Добавить файл">
+			+
+		</a>
+		<form action="{{ upload }}" enctype="multipart/form-data" method="post">
+			<input type="file" id="file-name" onchange="this.form.submit()" name="data"/>
+		</form>
+
+	</div>
+	<ul class="page-files">
+	{% for file in files %}
+		<li class="page-files-link" id="{{ file.key().id() }}">
+			<a href="{{ page.upath() }}/.files/{{ file.name | urlencode }}" title="{{ file.date | format }}">
+			{{ file.name }}
+			</a> {{ file.size | size }}
+			<img onclick="deleteFile('{{ page.upath() }}', '{{ file.name | urlencode }}', {{ file.key().id() }})" src="/_static/img/delete.png"/>	
+		</li>
+	{% endfor %}
+	</ul>
+</div>
+
+{# page updated #}
+<div class="page-menu">
+	<div class="page-menu-item">
+		<a href="{{ page.upath() }}/.log" class="page-updated" title="История изменений">Обновлен</a>
+		<span style="font-size: 15px;">{{ page.updated | format }}<span>
+		<span>{{ page.user_id | user_name | escape }}</span>
+	</div>
+</div>
+
+{% endif %}
+
+{# breadcrumbs #}
+{% if not public %}
+<div class="breadcrumbs">
+	<a href="/">wiki</a> :
+	
+	{% for name, url in breadcrumbs %}
+		{% if not loop.last %}
+			<a href="{{ url }}">{{ name }}</a> /
+		{% else %}
+			{{ page.name if page.name else name }}
+		{% endif %}
+	{% endfor %}
+
+	{% if page.access == 'PRIVATE' %}
+		<img src="/_static/img/lock.png" style="vertical-align: top;"/>
+	{% endif %}
+</div>
+{% endif %}
+
+{# check access #}
+{% if not has_access %}
+	
+	<h2>Доступ к данной странице закрыт</h2>
+
+{% elif public %}
+
+	<div class="page-text">
+		{{ page.html }} 
+	</div>
+
+{% else %}
+
+	{% block get_content %}
+	{% if not page %}
+
+		<h2>Данная страница не существует</h2>
+
+		<a onclick="l = window.location; if (l.pathname.length > 1) l.href += '/.edit'; else l.href = '/.edit';" 
+		   class="page-edit-btn">
+			Создать
+		</a>
+
+	{% else %}
+
+		{# wiki page #}
+		<div class="page-text" ondblclick="location.href='{{ page.upath() }}/.edit'">
+			{{ page.html }} 
+		</div>
+
+		<a href="{{ page.upath() }}/.edit" class="page-edit-btn">Правка</a>
+
+	{% endif %}
+	{% endblock %}
+
+{% endif %}
+
+{% endblock %}

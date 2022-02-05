@@ -1,0 +1,42 @@
+{% extends "get.html" %}
+
+{% block get_content %}
+
+<h1>Доступ к странице</h1>
+
+<form method="POST">
+
+<script>
+function desc(e) {
+	s = e.target
+	value = s.options[s.selectedIndex].value	
+	$('.access-desc').css('display', 'none')
+	$('#'+value).css('display', 'block')
+}
+</script>
+
+Доступ к этой странице: 	
+<select name="access" onchange="desc(event)">
+	<option value="parent" {% if page.access == 'PARENT' %}selected{% endif %}>
+		Наследуется
+	</option>
+	<option value="private" {% if page.access == 'PRIVATE' %}selected{% endif %}>
+		Приватный
+	</option>
+	<option value="public" {% if page.access == 'PUBLIC' %}selected{% endif %}>
+		Публичный
+	</option>
+</select>
+
+<!-- Access description -->
+<div style="height: 30px;">
+	<div id="parent" class="access-desc">Описание доступа наследуется от родительской страницы</div>
+	<div id="private" class="access-desc">Закрытый доступ. Страницу видите только вы.</div>
+	<div id="public" class="access-desc">Публичная страница доступная для всех.</div>
+</div>
+
+<input type="submit" value="Сохранить"/>
+<a href="{{ page.path }}">Отмена</a>
+</form>
+
+{% endblock %}

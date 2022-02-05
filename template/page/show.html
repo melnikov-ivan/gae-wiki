@@ -1,0 +1,15 @@
+{% extends "get.html" %}
+
+{% block get_content %}
+
+<div class="page-revision">
+Изменения от {{ history.updated | format }}
+{{ user.name }}
+<a href="{{ page.path }}">Текущая версия</a>
+</div>
+
+<div class="page-text">
+{{ html }}
+</div>
+
+{% endblock %}

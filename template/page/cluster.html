@@ -1,0 +1,15 @@
+{% extends "get.html" %}
+
+{% block get_content %}
+
+<h1>Кластер {{ page.path }}</h1>
+
+{% for page in cluster %}
+<div>
+	<a href="{{ page.path }}">{{ page.path }}</a>
+	{{ page.name if page.name else '' }}
+	<small>({{ page.updated | format }})</small>
+</div>
+{% endfor %}
+
+{% endblock %}

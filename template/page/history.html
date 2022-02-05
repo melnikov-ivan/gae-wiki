@@ -1,0 +1,16 @@
+{% extends "get.html" %}
+
+{% block get_content %}
+
+<h1>История изменений</h1>
+
+Назад <a href="{{ page.path }}">{{ page.path }}</a>
+
+{% for item in history %}
+<div>
+	<a href="{{ page.upath() }}/.show?id={{ item.key().id() }}">{{ item.updated | format }}</a>
+	{{ item.user_id | user_name }}
+</div>
+{% endfor %}
+
+{% endblock %}

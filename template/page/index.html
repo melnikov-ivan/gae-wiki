@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="icon" type="image/png" href="/_static/img/favicon.png">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+	<link rel="stylesheet" type="text/css" href="/_static/css/page.css">
+	<link rel="stylesheet" type="text/css" href="/_static/css/wiki.css">
+	<script type="text/javascript" charset="utf-8" src="/_static/js/page.js"></script>
+	<script src="/_static/js/jquery.js"></script>
+	{% block head %} {% endblock %}
+</head>
+<body>
+<div class="page-content">
+
+{# Шапка #}
+{% if not public %}
+<div class="page-header">
+	
+	<div class="logout">
+
+		{# Настройки пользователя #}
+		<div class="settings">
+			<img class="settings-icon" onclick="$('.settings-menu').css('display', 'block')" src="/_static/img/settings.png"/>
+			<div class="settings-menu">
+				<a href="/.user">Пользователи</a>
+			</div>
+		</div>
+
+
+		<a href="{{ logout }}">Выйти</a>
+	</div>
+
+	{# Форма поиска #}
+	<div style="float: right;">
+	<form action="/.search">
+	<input class="search" name="text" placeholder="Поиск" 
+			onfocus="$('.search').addClass('search-active')"
+			onblur="$('.search').removeClass('search-active')"
+			/>
+	</form>
+	</div>
+
+	<a onclick="$('#create-panel').css('display','block');" class="create-btn">Создать</a>
+	<div id="create-panel" style="display: none;">
+		<table class="create-form" border="0px">
+		<form method="GET" onsubmit="this.action=document.getElementById('create-path').value+'/.edit'">
+		<tr>
+			<td align="right">Путь:</td>
+			<td><input id="create-path" size="50" placeholder="/newpage"/></td>
+		</tr>
+		<tr>
+			<td align="right">Название:</td>
+			<td><input name="name" size="50" autofocus="autofocus"/></td>
+		</tr>
+		<tr><td/>
+			<td>
+			<input type="submit" value="Сохранить">
+			<a onclick="$('#create-panel').css('display','none');">Отмена</a>
+			</td>
+		</tr>
+		</form>
+		</table>
+	</div>
+
+	<br style="clear:both"/>
+</div>
+{% endif %}
+
+{# Тело страницы #}
+<div class="main">
+{% block content %}
+{% endblock %}
+</div>
+
+{# Подвал #}
+<div class="page-footer">
+	{# TODO: добавить пункт "Создать свой проект" #}
+	<span>
+		<a href="/_docs/syntax.html">Синтаксис</a>
+	</span>
+	<span>
+		<a href="http://wikinote.me/faq">Вопросы</a>
+	</span>
+	<span>
+		<a href="mailto:melnikov.ivan@gmail.com">Контакты</a>
+	</span>
+	<span>
+		<a href="http://bitbucket.org/imelnikov/gae-wiki-ee/issues/new">Нашли ошибку?</a>
+	</span>
+	<span>
+		2012-2017 &copy; <a href="http://bitbucket.org/imelnikov/gae-wiki-ee">WikiNote</a>
+	</span>
+</div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,14 @@
+{% extends "get.html" %}
+
+{% block get_content %}
+
+<h1>Уверены что хотите удалить страницу?</h1>
+
+Все прикрепленные файлы также будут удалены.<br/><br/>
+
+<form method="POST">
+	<input type="submit" value="Удалить"/>
+	<a href="{{ page.upath() }}">Отмена</a>
+</form>
+
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends "get.html" %}
+
+{% block get_content %}
+
+<h1>Подписка на изменения</h1>
+
+<h2>Вы будете получать уведомления об изменениях</h2>
+
+<form method="post">
+
+<label>
+	<input type="radio" name="type" value="page" {% if type == 'page' %}checked{% endif %}/>
+	страница
+</label><br/>
+<label>
+	<input type="radio" name="type" value="cluster" {% if type == 'cluster' %}checked{% endif %}/>
+	кластер
+</label><br/>
+<label>
+	<input type="radio" name="type" value="none" {% if type == 'none' %}checked{% endif %}/>
+	не получать
+</label><br/>
+
+	<input type="submit" value="Сохранить"/>
+	<a href="{{ page.upath() }}">Отмена</a>
+
+</form>
+
+{% if subscribers is not_empty %}
+
+<h2>Наблюдатели</h2>
+
+{% for user in subscribers %}
+	<div>
+	{{ user.name }}
+	</div>
+{% endfor %}
+
+{% else %}
+
+<h2>Еще никто не подписан на эту страницу</h2>
+
+{% endif %}
+
+{% endblock %}

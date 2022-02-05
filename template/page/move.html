@@ -1,0 +1,17 @@
+{% extends "get.html" %}
+
+{% block get_content %}
+
+<h1>Перенести</h1>
+
+<form method="POST">
+<table>
+	<tr><td>Страницу</td><td><input value="{{ page.path }}" readonly="true"/></td></tr>
+	<tr><td>В новое место</td><td><input name="new_path" value="{{ page.path }}" focus="on"/></td></tr>
+	<tr><td>Кластер целиком</td><td><input type="checkbox" name="cluster"/></td></tr>
+</table>
+	<input type="submit" value="Далее"/>
+	<a href="{{ page.upath() }}">Отмена</a>
+</form>
+
+{% endblock %}

@@ -18,7 +18,7 @@ domain = 'localhost'
 * Выполнить
 
 ```
-dev_appserver.py wiki-ee/
+google-cloud-sdk/bin/dev_appserver.py wiki-ee/
 
 ```
 
@@ -33,4 +33,4 @@ TODO
 ----
 1. add creole lib
 2. add tests
-3. add templates
+3. --add templates--
